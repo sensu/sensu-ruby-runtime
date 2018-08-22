@@ -8,10 +8,8 @@ RUN \
   tar -xzvf ruby-install-0.7.0.tar.gz && \
   cd ruby-install-0.7.0/ && \
   sudo make install && \
-  ## ruby-install --rubies-dir /var/cache/sensu/sensu-agent ruby ${RUBY_VERSION} && \
   ruby-install ruby ${RUBY_VERSION} -- --enable-load-relative && \
   echo "This ruby depends on the following linked libraries: " && \
-  ## ldd /var/cache/sensu/sensu-agent/ruby-${RUBY_VERSION}/bin/ruby && \
   ldd /opt/rubies/ruby-${RUBY_VERSION}/bin/ruby && \
   cp /lib/ld-musl-x86_64.so.1 ruby-${RUBY_VERSION}/lib/ && \
   cp /lib/ld-musl-x86_64.so.1 ruby-${RUBY_VERSION}/lib/libc.musl-x86_64.so.1 && \
