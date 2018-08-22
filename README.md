@@ -1,7 +1,7 @@
 # Sensu 2.0 Ruby Runtime Asset Prototype
 
 This is an experimental/prototype attempt at building a [Sensu 2.0
-Asset][assets] containing a portable Ruby runtime, based on the excellent
+Asset][sensu-assets] containing a portable Ruby runtime, based on the excellent
 [ruby-install project by postmodern][ruby-install].
 
 [sensu-assets]: https://docs.sensu.io/sensu-core/2.0/reference/assets/
