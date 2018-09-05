@@ -64,7 +64,7 @@ To test this prototype, please note the following instructions:
    require "date"
 
    puts "Hello world!" 
-   puts "Using Ruby Version #{RUBY_VERSON}"
+   puts "Using Ruby Version #{RUBY_VERSION}"
    puts "Using Ruby Executable #{RbConfig.ruby}"
    puts "The time is now #{Time.now()}"
    ```   
