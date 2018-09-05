@@ -63,7 +63,10 @@ To test this prototype, please note the following instructions:
 
    require "date"
 
-   puts "Hello world! The time is now #{Time.now()}"
+   puts "Hello world! 
+   puts "Using Ruby Version #{RUBY_VERSON}"
+   puts "Using Ruby Executable #{RbConfig.ruby}"
+   puts "The time is now #{Time.now()}"
    ```   
 
    _NOTE: this is a silly "hello world" example, but it shows that we have
