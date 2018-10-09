@@ -15,7 +15,8 @@ To test this prototype, please note the following instructions:
    a Sensu 2.0 Asset.
 
    ```
-   $ docker build --build-arg "RUBY_VERSION=2.4.4" -t sensu-ruby:2.4.4 .
+   $ docker build --build-arg "RUBY_VERSION=2.4.4" -t sensu-ruby-alpine:2.4.4 -f Dockerfile.alpine .
+   $ docker build --build-arg "RUBY_VERSION=2.4.4" -t sensu-ruby-debian:2.4.4 -f Dockerfile.debian .
    ```
 
 2. Extract your new sensu-ruby asset, and get the SHA-512 hash for your
@@ -23,7 +24,7 @@ To test this prototype, please note the following instructions:
 
    ```
    $ mkdir assets
-   $ docker run -v "$PWD/assets:/assets" sensu-ruby:2.4.4 cp /opt/rubies/ruby-2.4.4.tar.gz /assets/
+   $ docker run -v "$PWD/assets:/assets" sensu-ruby-debian:2.4.4 cp /opt/rubies/ruby-2.4.4.tar.gz /assets/
    $ shasum -a 512 assets/ruby-2.4.4.tar.gz
    ```
 
@@ -33,7 +34,7 @@ To test this prototype, please note the following instructions:
 
 3. Create an asset resource in Sensu 2.0.  
 
-   First, create a configuration file called `sensu-ruby-2.4.4.json` with
+   First, create a configuration file called `sensu-ruby-debian-2.4.4.json` with
    the following contents:
 
    ```
@@ -41,8 +42,8 @@ To test this prototype, please note the following instructions:
        "type": "Asset",
        "spec": {
            "organization": "default",
-           "name": "ruby-2.4.4",
-           "url": "http://your-asset-server-here/assets/ruby-2.4.4.tar.gz",
+           "name": "sensu-ruby-debian-2.4.4",
+           "url": "http://your-asset-server-here/assets/sensu-ruby-debian-2.4.4.tar.gz",
            "sha512": "a5c359c7395ff1929391de638e5afbcb4d46e8fc5c930adaef76df7edd427e37b0e22d425e4b14f68282e10524420c692740bf1a319ab6f7cdb1e922d8f71731"
        }
    }
@@ -51,7 +52,7 @@ To test this prototype, please note the following instructions:
    Then create the asset via:
 
    ```
-   $ sensuctl create -f sensu-ruby-2.4.4.json
+   $ sensuctl create -f sensu-ruby-debian-2.4.4.json
    ```
 
    _NOTE: to run a simple test using this asset, create another asset called
