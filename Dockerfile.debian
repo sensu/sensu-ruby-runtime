@@ -9,11 +9,11 @@ RUN \
   cd ruby-install-0.7.0/ && \
   make install && \
   ruby-install ruby ${RUBY_VERSION} -- --enable-load-relative --disable-install-doc && \
-  PATH=$PATH:/opt/rubies/ruby-${RUBY_VERSION}/bin/ && gem install --no-ri --no-rdoc ffi 
-RUN \
+  PATH=$PATH:/opt/rubies/ruby-${RUBY_VERSION}/bin/ && gem install --no-ri --no-rdoc ffi && \
   cp /usr/lib/x86_64-linux-gnu/libssl.so.1.1 /usr/lib/x86_64-linux-gnu/libcrypto.so.1.1 /opt/rubies/ruby-${RUBY_VERSION}/lib/ && \
   mkdir /assets/ && \
-  tar -czf /assets/sensu-ruby-${RUBY_VERSION}.tar.gz -C /opt/rubies/ruby-${RUBY_VERSION}/ . && \
-  sha512sum /assets/sensu-ruby-${RUBY_VERSION}.tar.gz
+  export SENSU_ASSET="/assets/sensu-ruby-${RUBY_VERSION}-$(source /etc/os-release && echo $ID)-$(uname -s | tr '[:upper:]' '[:lower:]')-$(uname -m).tar.gz" && \
+  tar -czf $SENSU_ASSET -C /opt/rubies/ruby-${RUBY_VERSION}/ . && \
+  sha512sum $SENSU_ASSET
 
 ENV PATH=$PATH:/opt/rubies/ruby-${RUBY_VERSION}/bin

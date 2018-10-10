@@ -1,11 +1,25 @@
 # Sensu 2.0 Ruby Runtime Asset Prototype
 
-This is an experimental/prototype attempt at building a [Sensu 2.0
-Asset][sensu-assets] containing a portable Ruby runtime, based on the excellent
-[ruby-install project by postmodern][ruby-install].
+This project provides [Sensu 2.0 Assets][sensu-assets] containing portable Ruby
+runtimes (for various platofrms), based on the excellent [ruby-install project
+by postmodern][ruby-install]. In practice, this Ruby runtime asset should allow
+Ruby-based scripts (e.g. [Sensu Community plugins][sensu-plugins]) to be 
+packaged as separate assets containing Ruby scripts and any corresponding gem 
+dependencies. In this way, a single shared Ruby runtime may be delivered to 
+systems running the new Sensu 2.0 Agent via the new Sensu's new Asset framework
+(i.e. avoiding solutions that would require a Ruby runtime to be redundantly 
+packaged with every ruby-based plugin). 
+
+This same project may be used to build Sensu Assets for Ruby-based plugins via
+[`bundler`][bundler] or other similar tools. I'll share more information on 
+building Ruby-based assets with third-party gem depdencies using Bundler soon;
+in the interim, please review the instructions below for more information on 
+how to get started with this project. 
 
 [sensu-assets]: https://docs.sensu.io/sensu-core/2.0/reference/assets/
 [ruby-install]: https://github.com/postmodern/ruby-install
+[sensu-plugins]: https://github.com/sensu-plugins/
+[bundler]: https://bundler.io 
 
 ## Instructions
 
@@ -24,7 +38,7 @@ To test this prototype, please note the following instructions:
 
    ```
    $ mkdir assets
-   $ docker run -v "$PWD/assets:/assets" sensu-ruby-debian:2.4.4 cp /opt/rubies/ruby-2.4.4.tar.gz /assets/
+   $ docker run -v "$PWD/assets:/assets" sensu-ruby:2.4.4-debian cp /assets/ruby-2.4.4.tar.gz /assets/
    $ shasum -a 512 assets/ruby-2.4.4.tar.gz
    ```
 
