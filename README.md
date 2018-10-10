@@ -56,8 +56,8 @@ To test this prototype, please note the following instructions:
        "type": "Asset",
        "spec": {
            "organization": "default",
-           "name": "sensu-ruby-debian-2.4.4",
-           "url": "http://your-asset-server-here/assets/sensu-ruby-debian-2.4.4.tar.gz",
+           "name": "sensu-ruby-2.4.4-debian",
+           "url": "http://your-asset-server-here/assets/sensu-ruby-2.4.4-debian.tar.gz",
            "sha512": "a5c359c7395ff1929391de638e5afbcb4d46e8fc5c930adaef76df7edd427e37b0e22d425e4b14f68282e10524420c692740bf1a319ab6f7cdb1e922d8f71731"
        }
    }
@@ -66,12 +66,14 @@ To test this prototype, please note the following instructions:
    Then create the asset via:
 
    ```
-   $ sensuctl create -f sensu-ruby-debian-2.4.4.json
+   $ sensuctl create -f sensu-ruby-2.4.4-debian.json
    ```
 
-   _NOTE: to run a simple test using this asset, create another asset called
-   `helloworld-v0.1.tar.gz` with a simple ruby script at `bin/helloworld.rb`;
-   e.g.:_
+4. Create a second asset containing a Ruby script.
+
+   To run a simple test using the Ruby runtime asset, create another asset 
+   called `helloworld-v0.1.tar.gz` with a simple ruby script at 
+   `bin/helloworld.rb`; e.g.:
 
    ```ruby
    #!/usr/bin/env ruby
@@ -81,12 +83,13 @@ To test this prototype, please note the following instructions:
    puts "Hello world! The time is now #{Time.now()}"
    ```   
 
-   _NOTE: this is a silly "hello world" example, but it shows that we have
+   _NOTE: this is a simple "hello world" example, but it shows that we have
    support for basic stlib gems!_
 
-   Register this asset with Sensu, and then you're all ready to test!
+   Compress this file into a g-zipped tarball and register this asset with 
+   Sensu, and then you're all ready to run some tests! 
 
-4. Create a check resource in Sensu 2.0.  
+5. Create a check resource in Sensu 2.0.  
 
    First, create a configuration file called `helloworld.json` with
    the following contents:
@@ -99,7 +102,7 @@ To test this prototype, please note the following instructions:
            "environment": "default",
            "name": "helloworld",
            "command": "helloworld.rb",
-           "runtime_assets": ["ruby-2.4.4", "helloworld-v0.1"],
+           "runtime_assets": ["sensu-ruby-2.4.4-debian", "helloworld-v0.1"],
            "publish": true,
            "interval": 10,
            "subscriptions": ["docker"]
@@ -113,7 +116,10 @@ To test this prototype, please note the following instructions:
    $ sensuctl create -f helloworld.json
    ```
 
-## What's next?
+   At this point, the `sensu-backend` should begin publishing your check 
+   request. Any `sensu-agent` member of the "docker" subscription should 
+   receive the request, fetch the Ruby runtime and helloworld assets, 
+   unpack them, and successfully execute the `helloworld.rb` command by 
+   resolving the Ruby shebang (`#!/usr/bin/env ruby`) to the Ruby runtime 
+   on the Sensu agent `$PATH`. 
 
-- Try building a Ruby runtime asset containing gems, and running a ruby script
-  with third-party gem dependencies?
