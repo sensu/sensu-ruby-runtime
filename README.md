@@ -1,4 +1,4 @@
-# Sensu 2.0 Ruby Runtime Asset Prototype
+# Sensu Go Ruby Runtime Asset Prototype
 
 This project provides [Sensu 2.0 Assets][sensu-assets] containing portable Ruby
 runtimes (for various platforms), based on the excellent [ruby-install project
