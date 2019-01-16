@@ -11,8 +11,8 @@ RUN \
   ruby-install ruby ${RUBY_VERSION} -- --enable-load-relative --disable-install-doc && \
   PATH=$PATH:/opt/rubies/ruby-${RUBY_VERSION}/bin/ && gem install --no-ri --no-rdoc ffi && \
   mkdir /assets/ && \
-  export SENSU_ASSET="/assets/sensu-ruby-${RUBY_VERSION}-$(source /etc/os-release && echo $ID)-$(uname -s | tr '[:upper:]' '[:lower:]')-$(uname -m).tar.gz" && \
+  export SENSU_ASSET="/assets/sensu-ruby-runtime-${RUBY_VERSION}-$(source /etc/os-release && echo $ID)-$(uname -s | tr '[:upper:]' '[:lower:]')-$(uname -m).tar.gz" && \
   tar -czf $SENSU_ASSET -C /opt/rubies/ruby-${RUBY_VERSION}/ . && \
   sha512sum $SENSU_ASSET
 
-ENV PATH=$PATH:/opt/rubies/ruby-${RUBY_VERSION}/bin 
+ENV PATH=$PATH:/opt/rubies/ruby-${RUBY_VERSION}/bin
