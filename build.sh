@@ -1,6 +1,6 @@
 #!/bin/bash
 
-platforms=( alpine )
+platforms=( alpine debian centos )
 ruby_version=2.4.4
 asset_version=${TRAVIS_TAG:-0.0.1}
 
