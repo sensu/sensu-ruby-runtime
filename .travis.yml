@@ -3,6 +3,7 @@ services:
   - docker
 script:
   - "./build.sh"
+  - "./checksum.sh"
   - "./upload.sh"
 env:
   global:
