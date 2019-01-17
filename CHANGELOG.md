@@ -7,6 +7,14 @@ Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+## [0.0.4] - 2019-01-16
+
+### Fixed
+- Debian asset platform name (static, removed os-release detection)
+
+### Added
+- CentOS and Debian Bonsai assets
+
 ## [0.0.3] - 2019-01-16
 
 ### Added
