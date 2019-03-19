@@ -29,8 +29,8 @@ Please note the following instructions:
    a Sensu Go Asset.
 
    ```
-   $ docker build --build-arg "RUBY_VERSION=2.4.4" -t sensu-ruby-alpine:2.4.4 -f Dockerfile.alpine .
-   $ docker build --build-arg "RUBY_VERSION=2.4.4" -t sensu-ruby-debian:2.4.4 -f Dockerfile.debian .
+   $ docker build --build-arg "RUBY_VERSION=2.4.4" -t sensu-ruby-runtime:2.4.4-alpine -f Dockerfile.alpine .
+   $ docker build --build-arg "RUBY_VERSION=2.4.4" -t sensu-ruby-runtime:2.4.4-debian -f Dockerfile.debian .
    ```
 
 2. Extract your new sensu-ruby asset, and get the SHA-512 hash for your
@@ -38,17 +38,17 @@ Please note the following instructions:
 
    ```
    $ mkdir assets
-   $ docker run -v "$PWD/assets:/assets" sensu-ruby:2.4.4-debian cp /assets/ruby-2.4.4.tar.gz /assets/
+   $ docker run -v "$PWD/assets:/assets" sensu-ruby-runtime:2.4.4-debian cp /assets/ruby-2.4.4.tar.gz /assets/
    $ shasum -a 512 assets/ruby-2.4.4.tar.gz
    ```
 
-3. Put that asset somewhere that your Sensu agent can fetch it.
+3. Put that asset somewhere that your Sensu agent can fetch it. Perhaps add it to the Bonsai asset index!
 
-   ...something something, sensu/sandbox, something...
+
 
 3. Create an asset resource in Sensu Go.
 
-   First, create a configuration file called `sensu-ruby-debian-2.4.4.json` with
+   First, create a configuration file called `sensu-ruby-runtime-2.4.4-debian.json` with
    the following contents:
 
    ```
@@ -56,13 +56,13 @@ Please note the following instructions:
      "type": "Asset",
      "api_version": "core/v2",
      "metadata": {
-       "name": "sensu-ruby-2.4.4-debian",
+       "name": "sensu-ruby-runtime-2.4.4-debian",
        "namespace": "default",
        "labels": {},
        "annotations": {}
      },
      "spec": {
-       "url": "http://your-asset-server-here/assets/sensu-ruby-2.4.4-debian.tar.gz",
+       "url": "http://your-asset-server-here/assets/sensu-ruby-runtime-2.4.4-debian.tar.gz",
        "sha512": "4f926bf4328fbad2b9cac873d117f771914f4b837c9c85584c38ccf55a3ef3c2e8d154812246e5dda4a87450576b2c58ad9ab40c9e2edc31b288d066b195b21b",
        "filters": [
          "entity.system.os == 'linux'",
@@ -76,7 +76,7 @@ Please note the following instructions:
    Then create the asset via:
 
    ```
-   $ sensuctl create -f sensu-ruby-2.4.4-debian.json
+   $ sensuctl create -f sensu-ruby-runtime-2.4.4-debian.json
    ```
 
 4. Create a second asset containing a Ruby script.
@@ -116,7 +116,7 @@ Please note the following instructions:
      },
      "spec": {
        "command": "helloworld.rb",
-       "runtime_assets": ["sensu-ruby-2.4.4-debian", "helloworld-v0.1"],
+       "runtime_assets": ["sensu-ruby-runtime-2.4.4-debian", "helloworld-v0.1"],
        "publish": true,
        "interval": 10,
        "subscriptions": ["docker"]
@@ -135,4 +135,5 @@ Please note the following instructions:
    receive the request, fetch the Ruby runtime and helloworld assets,
    unpack them, and successfully execute the `helloworld.rb` command by
    resolving the Ruby shebang (`#!/usr/bin/env ruby`) to the Ruby runtime
-   on the Sensu agent `$PATH`.
+   on the Sensu agent `$PATH`.:wq
+   
