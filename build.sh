@@ -10,5 +10,5 @@ for platform in "${platforms[@]}"
 do
     docker build --build-arg "RUBY_VERSION=$ruby_version" --build-arg "ASSET_VERSION=$asset_version" -t sensu-ruby-runtime:${ruby_version}-${platform} -f Dockerfile.${platform} .
 
-    docker run -v "$PWD/dist:/dist" sensu-ruby-runtime:${ruby_version}-${platform} cp /assets/sensu-ruby-runtime_${asset_version}_${platform}_linux_amd64.tar.gz /dist/
+    docker run -v "$PWD/dist:/dist" sensu-ruby-runtime:${ruby_version}-${platform} cp /assets/sensu-ruby-runtime_${asset_version}_ruby-${ruby_version}_${platform}_linux_amd64.tar.gz /dist/
 done
