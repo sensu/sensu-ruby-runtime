@@ -26,7 +26,7 @@ how to get started with this project.
 Please note the following instructions:
 
 1. Use a Docker container to install `ruby-install`, build a Ruby, and generate
-   a Sensu Go Asset.
+   a local_build Sensu Go Asset.
 
    ```
    $ docker build --build-arg "RUBY_VERSION=2.4.4" -t sensu-ruby-runtime:2.4.4-alpine -f Dockerfile.alpine .
@@ -38,8 +38,8 @@ Please note the following instructions:
 
    ```
    $ mkdir assets
-   $ docker run -v "$PWD/assets:/assets" sensu-ruby-runtime:2.4.4-debian cp /assets/ruby-2.4.4.tar.gz /assets/
-   $ shasum -a 512 assets/ruby-2.4.4.tar.gz
+   $ docker run -v "$PWD/assets:/assets" sensu-ruby-runtime:2.4.4-debian cp /assets/sensu-ruby-runtime_2.4.4_debian_linux_amd64.tar.gz /assets/
+   $ shasum -a 512 assets/sensu-ruby-runtime_2.4.4_debian_linux_amd64.tar.gz
    ```
 
 3. Put that asset somewhere that your Sensu agent can fetch it. Perhaps add it to the Bonsai asset index!

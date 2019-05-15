@@ -1,7 +1,7 @@
 FROM alpine:latest
 
-ARG RUBY_VERSION
-ARG ASSET_VERSION
+ARG RUBY_VERSION=2.4.4
+ARG ASSET_VERSION=local_build
 
 RUN apk add linux-headers build-base zlib-dev openssl-dev wget sudo bash bash-doc bash-completion
 
@@ -10,10 +10,11 @@ RUN wget -O ruby-install-0.7.0.tar.gz https://github.com/postmodern/ruby-install
   cd ruby-install-0.7.0/ && \
   sudo make install && \
   ruby-install ruby ${RUBY_VERSION} -- --enable-load-relative --disable-install-doc && \
-  PATH=$PATH:/opt/rubies/ruby-${RUBY_VERSION}/bin/ && gem install --no-ri --no-rdoc ffi
+  PATH=$PATH:/opt/rubies/ruby-${RUBY_VERSION}/bin/ && gem install --no-ri --no-rdoc ffi && \
+  cp /lib/libssl.so.1.1 /lib/libcrypto.so.1.1 /opt/rubies/ruby-${RUBY_VERSION}/lib/
 
 RUN mkdir /assets/ && \
-  export SENSU_ASSET="/assets/sensu-ruby-runtime_${ASSET_VERSION}_$(source /etc/os-release && echo $ID)_$(uname -s | tr '[:upper:]' '[:lower:]')_amd64.tar.gz" && \
+  export SENSU_ASSET="/assets/sensu-ruby-runtime_${ASSET_VERSION}_ruby-${RUBY_VERSION}_$(source /etc/os-release && echo $ID)_$(uname -s | tr '[:upper:]' '[:lower:]')_amd64.tar.gz" && \
   tar -czf $SENSU_ASSET -C /opt/rubies/ruby-${RUBY_VERSION}/ .
 
 ENV PATH=$PATH:/opt/rubies/ruby-${RUBY_VERSION}/bin
