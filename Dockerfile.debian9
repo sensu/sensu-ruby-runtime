@@ -1,0 +1,22 @@
+FROM debian:stretch
+
+ARG RUBY_VERSION=2.4.4
+ARG ASSET_VERSION=local_build
+
+RUN apt-get update && apt-get install -y build-essential curl
+
+RUN curl -L https://github.com/postmodern/ruby-install/archive/v0.7.0.tar.gz -o ruby-install-0.7.0.tar.gz && \
+  tar -xzvf ruby-install-0.7.0.tar.gz && \
+  cd ruby-install-0.7.0/ && \
+  make install && \
+  ruby-install ruby ${RUBY_VERSION} -- --enable-load-relative --disable-install-doc && \
+  PATH=$PATH:/opt/rubies/ruby-${RUBY_VERSION}/bin/ && gem install --no-ri --no-rdoc ffi 
+
+RUN LIBS=$(find /opt/rubies/ruby-${RUBY_VERSION} -type f -executable -exec ldd {} 2>/dev/null \;|  grep "=>" | grep -v "libc.so" | grep -v "vdso.so.1" | awk '{print $3}'| sort -u ) && \
+  for f in $LIBS; do if [ -e $f ]; then echo "Copying Library: $f" && cp $f /opt/rubies/ruby-${RUBY_VERSION}/lib/; fi; done
+
+RUN mkdir /assets/ && \
+  export SENSU_ASSET="/assets/sensu-ruby-runtime_${ASSET_VERSION}_ruby-${RUBY_VERSION}_debian9_$(uname -s | tr '[:upper:]' '[:lower:]')_amd64.tar.gz" && \
+  tar -czf $SENSU_ASSET -C /opt/rubies/ruby-${RUBY_VERSION}/ .
+
+ENV PATH=$PATH:/opt/rubies/ruby-${RUBY_VERSION}/bin
