@@ -1,6 +1,6 @@
 #!/bin/bash
 
-platforms=( alpine debian centos alpine3.8 debian9 centos7 centos6 )
+platforms=( alpine alpine3.8 debian debian9 centos centos7 centos6 )
 ruby_version=2.4.4
 asset_version=${TRAVIS_TAG:-local-build}
 
