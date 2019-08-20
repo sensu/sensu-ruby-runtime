@@ -1,21 +1,36 @@
-# Sensu 2.0 Ruby Runtime Asset Prototype
+# Sensu Go Ruby Runtime Assets
 
-This is an experimental/prototype attempt at building a [Sensu 2.0
-Asset][sensu-assets] containing a portable Ruby runtime, based on the excellent
-[ruby-install project by postmodern][ruby-install].
+This project provides [Sensu Go Assets][sensu-assets] containing portable Ruby
+runtimes (for various platforms), based on the excellent [ruby-install project
+by postmodern][ruby-install]. In practice, this Ruby runtime asset should allow
+Ruby-based scripts (e.g. [Sensu Community plugins][sensu-plugins]) to be
+packaged as separate assets containing Ruby scripts and any corresponding gem
+dependencies. In this way, a single shared Ruby runtime may be delivered to
+systems running the new Sensu Go Agent via the new Sensu's new Asset framework
+(i.e. avoiding solutions that would require a Ruby runtime to be redundantly
+packaged with every ruby-based plugin).
 
-[sensu-assets]: https://docs.sensu.io/sensu-core/2.0/reference/assets/
+This same project may be used to build Sensu Assets for Ruby-based plugins via
+[`bundler`][bundler] or other similar tools. We'll share more information on
+building Ruby-based assets with third-party gem depdencies using Bundler soon;
+in the interim, please review the instructions below for more information on
+how to get started with this project.
+
+[sensu-assets]: https://docs.sensu.io/sensu-go/5.1/reference/assets/
 [ruby-install]: https://github.com/postmodern/ruby-install
+[sensu-plugins]: https://github.com/sensu-plugins/
+[bundler]: https://bundler.io
 
 ## Instructions
 
-To test this prototype, please note the following instructions:
+Please note the following instructions:
 
 1. Use a Docker container to install `ruby-install`, build a Ruby, and generate
-   a Sensu 2.0 Asset.
+   a local_build Sensu Go Asset.
 
    ```
-   $ docker build --build-arg "RUBY_VERSION=2.4.4" -t sensu-ruby:2.4.4 .
+   $ docker build --build-arg "RUBY_VERSION=2.4.4" -t sensu-ruby-runtime:2.4.4-alpine -f Dockerfile.alpine .
+   $ docker build --build-arg "RUBY_VERSION=2.4.4" -t sensu-ruby-runtime:2.4.4-debian -f Dockerfile.debian .
    ```
 
 2. Extract your new sensu-ruby asset, and get the SHA-512 hash for your
@@ -23,75 +38,89 @@ To test this prototype, please note the following instructions:
 
    ```
    $ mkdir assets
-   $ docker run -v "$PWD/assets:/assets" sensu-ruby:2.4.4 cp /opt/rubies/ruby-2.4.4.tar.gz /assets/
-   $ shasum -a 512 assets/ruby-2.4.4.tar.gz
+   $ docker run -v "$PWD/assets:/assets" sensu-ruby-runtime:2.4.4-debian cp /assets/sensu-ruby-runtime_2.4.4_debian_linux_amd64.tar.gz /assets/
+   $ shasum -a 512 assets/sensu-ruby-runtime_2.4.4_debian_linux_amd64.tar.gz
    ```
 
-3. Put that asset somewhere that your Sensu agent can fetch it.
+3. Put that asset somewhere that your Sensu agent can fetch it. Perhaps add it to the Bonsai asset index!
 
-   ...something something, sensu/sandbox, something...
 
-3. Create an asset resource in Sensu 2.0.  
 
-   First, create a configuration file called `sensu-ruby-2.4.4.json` with
+3. Create an asset resource in Sensu Go.
+
+   First, create a configuration file called `sensu-ruby-runtime-2.4.4-debian.json` with
    the following contents:
 
    ```
    {
-       "type": "Asset",
-       "spec": {
-           "organization": "default",
-           "name": "ruby-2.4.4",
-           "url": "http://your-asset-server-here/assets/ruby-2.4.4.tar.gz",
-           "sha512": "a5c359c7395ff1929391de638e5afbcb4d46e8fc5c930adaef76df7edd427e37b0e22d425e4b14f68282e10524420c692740bf1a319ab6f7cdb1e922d8f71731"
-       }
+     "type": "Asset",
+     "api_version": "core/v2",
+     "metadata": {
+       "name": "sensu-ruby-runtime-2.4.4-debian",
+       "namespace": "default",
+       "labels": {},
+       "annotations": {}
+     },
+     "spec": {
+       "url": "http://your-asset-server-here/assets/sensu-ruby-runtime-2.4.4-debian.tar.gz",
+       "sha512": "4f926bf4328fbad2b9cac873d117f771914f4b837c9c85584c38ccf55a3ef3c2e8d154812246e5dda4a87450576b2c58ad9ab40c9e2edc31b288d066b195b21b",
+       "filters": [
+         "entity.system.os == 'linux'",
+         "entity.system.arch == 'amd64'",
+         "entity.system.platform == 'debian'"
+       ]
+     }
    }
    ```
 
    Then create the asset via:
 
    ```
-   $ sensuctl create -f sensu-ruby-2.4.4.json
+   $ sensuctl create -f sensu-ruby-runtime-2.4.4-debian.json
    ```
 
-   _NOTE: to run a simple test using this asset, create another asset called
-   `helloworld-v0.1.tar.gz` with a simple ruby script at `bin/helloworld.rb`;
-   e.g.:_
+4. Create a second asset containing a Ruby script.
+
+   To run a simple test using the Ruby runtime asset, create another asset
+   called `helloworld-v0.1.tar.gz` with a simple ruby script at
+   `bin/helloworld.rb`; e.g.:
 
    ```ruby
    #!/usr/bin/env ruby
 
    require "date"
 
-   puts "Hello world!" 
-   puts "Using Ruby Version #{RUBY_VERSION}"
-   puts "Using Ruby Executable #{RbConfig.ruby}"
-   puts "The time is now #{Time.now()}"
-   ```   
+   puts "Hello world! The time is now #{Time.now()}"
+   ```
 
-   _NOTE: this is a silly "hello world" example, but it shows that we have
+   _NOTE: this is a simple "hello world" example, but it shows that we have
    support for basic stlib gems!_
 
-   Register this asset with Sensu, and then you're all ready to test!
+   Compress this file into a g-zipped tarball and register this asset with
+   Sensu, and then you're all ready to run some tests!
 
-4. Create a check resource in Sensu 2.0.  
+5. Create a check resource in Sensu 2.0.
 
    First, create a configuration file called `helloworld.json` with
    the following contents:
 
    ```
    {
-       "type": "Check",
-       "spec": {
-           "organization": "default",
-           "environment": "default",
-           "name": "helloworld",
-           "command": "helloworld.rb",
-           "runtime_assets": ["ruby-2.4.4", "helloworld-v0.1"],
-           "publish": true,
-           "interval": 10,
-           "subscriptions": ["docker"]
-       }
+     "type": "CheckConfig",
+     "api_version": "core/v2",
+     "metadata": {
+       "name": "helloworld",
+       "namespace": "default",
+       "labels": {},
+       "annotations": {}
+     },
+     "spec": {
+       "command": "helloworld.rb",
+       "runtime_assets": ["sensu-ruby-runtime-2.4.4-debian", "helloworld-v0.1"],
+       "publish": true,
+       "interval": 10,
+       "subscriptions": ["docker"]
+     }
    }
    ```
 
@@ -101,7 +130,10 @@ To test this prototype, please note the following instructions:
    $ sensuctl create -f helloworld.json
    ```
 
-## What's next?
-
-- Try building a Ruby runtime asset containing gems, and running a ruby script
-  with third-party gem dependencies?
+   At this point, the `sensu-backend` should begin publishing your check
+   request. Any `sensu-agent` member of the "docker" subscription should
+   receive the request, fetch the Ruby runtime and helloworld assets,
+   unpack them, and successfully execute the `helloworld.rb` command by
+   resolving the Ruby shebang (`#!/usr/bin/env ruby`) to the Ruby runtime
+   on the Sensu agent `$PATH`.:wq
+   
