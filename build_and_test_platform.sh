@@ -5,10 +5,7 @@ ruby_version=2.4.4
 asset_version=${TRAVIS_TAG:-local-build}
 asset_filename=sensu-ruby-runtime_${asset_version}_ruby-${ruby_version}_${platform}_linux_amd64.tar.gz
 asset_image=sensu-ruby-runtime-${ruby_version}-${platform}:${asset_version}
-docker_asset=${TRAVIS_REPO_SLUG}-${ruby_version}-${platform}:${asset_version}
 
-echo "Docker Hub Asset: ${docker_asset}"
-exit 0
 
 if [ "${asset_version}" = "local-build" ]; then
   echo "Local build"
@@ -51,6 +48,9 @@ done
 if [ -z "$TRAVIS_TAG" ]; then exit 0; fi
 if [ -z "$DOCKER_USER" ]; then exit 0; fi
 if [ -z "$DOCKER_PASSWORD" ]; then exit 0; fi
+
+docker_asset=${TRAVIS_REPO_SLUG}-${ruby_version}-${platform}:${asset_version}
+echo "Docker Hub Asset: ${docker_asset}"
 echo "preparing to tag and push docker hub asset"
 
 echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
