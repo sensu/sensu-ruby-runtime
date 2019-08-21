@@ -50,6 +50,7 @@ if [ -z "$DOCKER_USER" ]; then exit 0; fi
 if [ -z "$DOCKER_PASSWORD" ]; then exit 0; fi
 
 docker_asset=${TRAVIS_REPO_SLUG}-${ruby_version}-${platform}:${asset_version}
+
 echo "Docker Hub Asset: ${docker_asset}"
 echo "preparing to tag and push docker hub asset"
 
@@ -57,4 +58,14 @@ echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USER" --password-stdin
 
 docker tag ${asset_image} ${docker_asset}
 docker push ${docker_asset}
+
+ver=${asset_version%+*}
+prefix=${ver%-*}
+prerel=${ver/#$prefix}
+if [ ! -z "$prerel" ]; then 
+  echo "tagging as latest asset"
+  latest_asset=${TRAVIS_REPO_SLUG}-${ruby_version}-${platform}:latest
+  docker tag ${asset_image} ${latest_asset}
+  docker push ${latest_asset}
+fi
 
