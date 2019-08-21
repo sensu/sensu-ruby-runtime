@@ -2,8 +2,7 @@ language: ruby
 services:
   - docker
 script:
-   - "echo DOCKER_USER: ${DOCKER_USER}"
-#  - "./build_platforms.sh"
+  - "./build_platforms.sh"
 #  - "./checksum.sh"
 #  - "./upload.sh"
 env:
