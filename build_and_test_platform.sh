@@ -62,7 +62,7 @@ docker push ${docker_asset}
 ver=${asset_version%+*}
 prefix=${ver%-*}
 prerel=${ver/#$prefix}
-if [ ! -z "$prerel" ]; then 
+if [ -z "$prerel" ]; then 
   echo "tagging as latest asset"
   latest_asset=${TRAVIS_REPO_SLUG}-${ruby_version}-${platform}:latest
   docker tag ${asset_image} ${latest_asset}
