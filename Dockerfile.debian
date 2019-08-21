@@ -1,4 +1,4 @@
-FROM debian:stretch
+FROM debian:9
 
 ARG RUBY_VERSION=2.4.4
 ARG ASSET_VERSION=local_build
