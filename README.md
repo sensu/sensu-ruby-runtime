@@ -25,6 +25,7 @@ how to get started with this project.
 ## Platform Coverage:
  Currently this repository only supports a subset of Linux distribution by making use of Docker containers to build and test.
  If you would like extend the coverage, please take a look at the travisCI integration and test build scripts. We're happy to take pull requests that extending the platform coverage. Here's the current platform matrix that we are testing for as of the 0.1 release:
+
 | Asset Platform | Tested Operating Systems Docker Images |
 |:---------------|:-------------------------|
 |  alpine  (based on alpine:3.8)   | Alpine(3, 3.8, latest)                                      |
