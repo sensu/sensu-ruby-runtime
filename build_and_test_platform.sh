@@ -53,7 +53,7 @@ docker_asset=${TRAVIS_REPO_SLUG}-${ruby_version}-${platform}:${asset_version}
 echo "Docker Hub Asset: ${docker_asset}"
 echo "preparing to tag and push docker hub asset"
 
-echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USER" --password-stdin
 
 docker tag ${asset_image} ${docker_asset}
 docker push ${docker_asset}

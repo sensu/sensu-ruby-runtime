@@ -3,7 +3,7 @@ description: "#{repo}"
 builds:
 - platform: "alpine"
   arch: "amd64"
-  asset_filename: "#{repo}_#{version}_ruby-2.4.4_alpine3.8_linux_amd64.tar.gz"
+  asset_filename: "#{repo}_#{version}_ruby-2.4.4_alpine_linux_amd64.tar.gz"
   sha_filename: "#{repo}_#{version}_sha512-checksums.txt"
   filter:
   -  "entity.system.os == 'linux'"
@@ -12,7 +12,7 @@ builds:
   -  "entity.system.platform_version.split('.')[0] == '3'"
 - platform: "centos"
   arch: "amd64"
-  asset_filename: "#{repo}_#{version}_ruby-2.4.4_centos7_linux_amd64.tar.gz"
+  asset_filename: "#{repo}_#{version}_ruby-2.4.4_centos_linux_amd64.tar.gz"
   sha_filename: "#{repo}_#{version}_sha512-checksums.txt"
   filter:
   -  "entity.system.os == 'linux'"
@@ -21,7 +21,7 @@ builds:
   -  "parseInt(entity.system.platform_version.split('.')[0]) > 6"
 - platform: "debian"
   arch: "amd64"
-  asset_filename: "#{repo}_#{version}_ruby-2.4.4_debian9_linux_amd64.tar.gz"
+  asset_filename: "#{repo}_#{version}_ruby-2.4.4_debian_linux_amd64.tar.gz"
   sha_filename: "#{repo}_#{version}_sha512-checksums.txt"
   filter:
   -  "entity.system.os == 'linux'"
