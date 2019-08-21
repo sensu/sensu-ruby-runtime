@@ -7,7 +7,7 @@ mkdir -p scripts
 
 
 # Debian platform
-platform="debiani9" test_platforms="debian:8 debian:9 debian:10 ubuntu:14.04 ubuntu:16.04 ubuntu:18.04 centos:7" ./build_and_test_platform.sh
+platform="debian9" test_platforms="debian:8 debian:9 debian:10 ubuntu:14.04 ubuntu:16.04 ubuntu:18.04 centos:7" ./build_and_test_platform.sh
 retval=$?
 if [[ retval -ne 0 ]]; then
   exit $retval
