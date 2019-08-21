@@ -1,5 +1,4 @@
 #!/bin/bash
-echo "DOCKER_USER: ${DOCKER_USER}"
 
 mkdir -p dist
 mkdir -p assets
