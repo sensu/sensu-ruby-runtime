@@ -31,6 +31,7 @@ how to get started with this project.
 |  alpine  (based on alpine:3.8)   | Alpine(3, 3.8, latest)                                      |
 |  centos6 (based on centos:6)     | Centos(6, 7), Debian(8, 9, 10), Ubuntu(14.04, 16.04, 18.04  |
 |  centos  (based on centos:7)     | Centos(7), Debian(8, 9, 10), Ubuntu(14.04, 16.04, 18.04     |
+|  centos8  (based on centos:8)    | Centos(8)                                                   |
 |  debian  (based on debian:9)     | Debian(8, 9, 10), Ubuntu(14.04, 16.04, 18.04), Centos(7)    |
 
 ## OpenSSL Cert Dir
