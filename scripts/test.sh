@@ -10,7 +10,7 @@ fi
 mkdir -p /build
 cd /build
 tar xzf /dist/$asset_filename
-bad_besult=0
+bad_result=0
 LD_LIBRARY_PATH="/build/lib:$LD_LIBRARY_PATH" /build/bin/ruby /scripts/test_ssl_url.rb
 ssl_result=$?
 if [ $ssl_result -ne 0 ]; then
@@ -27,3 +27,5 @@ fi
 if [ $bad_result -ne 0 ]; then
 	exit 1
 fi
+
+exit 0
