@@ -11,3 +11,4 @@ mkdir -p /build
 cd /build
 tar xzf /dist/$asset_filename
 LD_LIBRARY_PATH="/build/lib:$LD_LIBRARY_PATH" /build/bin/ruby /scripts/test_ssl_url.rb
+LD_LIBRARY_PATH="/build/lib:$LD_LIBRARY_PATH" /build/bin/ruby /scripts/test_sys-filesystem.rb
