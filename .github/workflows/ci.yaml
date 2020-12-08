@@ -20,25 +20,25 @@ jobs:
       id: echo_settings
       run: "echo platform: ${{ steps.random_platform.outputs.PLATFORM }} version: ${{ steps.get_version.outputs.VERSION }}" 
     - name: Build and test alpine 
-      if: steps.get_version.outputs.VERSION || steps.random_platform.outputs.PLATFORM == "alpine" 
+      if: steps.get_version.outputs.VERSION || steps.random_platform.outputs.PLATFORM == 'alpine' 
       env: 
         TAG: ${{ steps.get_version.outputs.VERSION }}
         REPO_SLUG: ${{ github.repository }}  
       run: ./build_scripts/build_alpine_platforms.sh
     - name: Build and test amazon 
-      if: steps.get_version.outputs.VERSION || steps.random_platform.outputs.PLATFORM == "amazon" 
+      if: steps.get_version.outputs.VERSION || steps.random_platform.outputs.PLATFORM == 'amazon' 
       env: 
         TAG: ${{ steps.get_version.outputs.VERSION }}
         REPO_SLUG: ${{ github.repository }}  
       run: ./build_scripts/build_amazon_platforms.sh
     - name: Build and test debian 
-      if: steps.get_version.outputs.VERSION || steps.random_platform.outputs.PLATFORM == "debian" 
+      if: steps.get_version.outputs.VERSION || steps.random_platform.outputs.PLATFORM == 'debian' 
       env: 
         TAG: ${{ steps.get_version.outputs.VERSION }}
         REPO_SLUG: ${{ github.repository }}  
       run: ./build_scripts/build_debian_platforms.sh
     - name: Build and test centos 
-      if: steps.get_version.outputs.VERSION || steps.random_platform.outputs.PLATFORM == "centos" 
+      if: steps.get_version.outputs.VERSION || steps.random_platform.outputs.PLATFORM == 'centos' 
       env: 
         TAG: ${{ steps.get_version.outputs.VERSION }}
         REPO_SLUG: ${{ github.repository }}  
