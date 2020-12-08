@@ -2,7 +2,7 @@
 
 ignore_errors=0
 ruby_version=2.4.4
-asset_version=${TRAVIS_TAG:-local-build}
+asset_version=${TAG:-local-build}
 asset_filename=sensu-ruby-runtime_${asset_version}_ruby-${ruby_version}_${platform}_linux_amd64.tar.gz
 asset_image=sensu-ruby-runtime-${ruby_version}-${platform}:${asset_version}
 
@@ -45,11 +45,11 @@ for test_platform in "${test_arr[@]}"; do
   fi
 done
 
-if [ -z "$TRAVIS_TAG" ]; then exit 0; fi
+if [ -z "$TAG" ]; then exit 0; fi
 if [ -z "$DOCKER_USER" ]; then exit 0; fi
 if [ -z "$DOCKER_PASSWORD" ]; then exit 0; fi
 
-docker_asset=${TRAVIS_REPO_SLUG}-${ruby_version}-${platform}:${asset_version}
+docker_asset=${REPO_SLUG}-${ruby_version}-${platform}:${asset_version}
 
 echo "Docker Hub Asset: ${docker_asset}"
 echo "preparing to tag and push docker hub asset"
@@ -64,7 +64,7 @@ prefix=${ver%-*}
 prerel=${ver/#$prefix}
 if [ -z "$prerel" ]; then 
   echo "tagging as latest asset"
-  latest_asset=${TRAVIS_REPO_SLUG}-${ruby_version}-${platform}:latest
+  latest_asset=${REPO_SLUG}-${ruby_version}-${platform}:latest
   docker tag ${asset_image} ${latest_asset}
   docker push ${latest_asset}
 fi
