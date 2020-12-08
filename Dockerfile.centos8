@@ -6,8 +6,9 @@ ARG GREP_EXCLUDE='(ld.so|ld-linux-x86-64.so|libBrokenLocale.so|libSegFault.so|li
 
 
 RUN dnf update -y && dnf groupinstall -y "Development Tools" && dnf install -y curl
-RUN dnf install dnf-plugins-core && dnf config-manager --set-enabled PowerTools
-RUN dnf repolist
+RUN dnf install dnf-plugins-core 
+RUN dnf repolist --all
+RUN dnf config-manager --set-enabled powertools
 
 RUN curl -L https://github.com/postmodern/ruby-install/archive/v0.7.0.tar.gz -o ruby-install-0.7.0.tar.gz && \
   tar -xzvf ruby-install-0.7.0.tar.gz && \
