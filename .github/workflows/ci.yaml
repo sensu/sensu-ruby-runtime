@@ -16,6 +16,6 @@ jobs:
       run: echo "Always run"
     - name: Run if tagged version
       if: ${{ steps.get_version.outputs.VERSION }}
-      env: 
-        TRAVIS_TAG: ${{ steps.get_version.outputs.VERSION }}
-      run: echo "Version: TRAVIS_TAG"
+      run: echo "Version: $TRAVIS_TAG"
+        #env: 
+        #TRAVIS_TAG: ${{ steps.get_version.outputs.VERSION }}
