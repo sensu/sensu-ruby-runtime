@@ -2,7 +2,8 @@
 
 files=( dist/*.tar.gz )
 echo "Asset files:"
-echo $files
+( IFS=$'\n'; echo "${files[*]}" )
+
 file=$(basename "${files[0]}")
 
 project=$(echo $file | cut -d'_' -f 1)
