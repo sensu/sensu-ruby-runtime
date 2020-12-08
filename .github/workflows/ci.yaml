@@ -13,9 +13,8 @@ jobs:
       id: get_version
       run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
     - name: Always run
-      run: echo "Always run"
+      run: echo Always run
     - name: Run if tagged version
       env: 
         TRAVIS_TAG: ${{ steps.get_version.outputs.VERSION }}
-      #if: ${{ steps.get_version.outputs.VERSION != "" }}
-      run: echo "Version: $TRAVIS_TAG"
+      run: echo Version $TRAVIS_TAG
