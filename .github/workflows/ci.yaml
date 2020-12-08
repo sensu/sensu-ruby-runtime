@@ -15,7 +15,7 @@ jobs:
     - name: Always run
       run: echo Always run
     - name: Run if tagged version
-      if: ${{ steps.get_version.outputs.VERSION }} 
+      if: github.event_name == 'push' && contains(github.ref, 'refs/tags/') 
       env: 
         TRAVIS_TAG: ${{ steps.get_version.outputs.VERSION }}
       run: echo Version $TRAVIS_TAG
