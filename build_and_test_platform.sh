@@ -45,9 +45,18 @@ for test_platform in "${test_arr[@]}"; do
   fi
 done
 
-if [ -z "$TAG" ]; then exit 0; fi
-if [ -z "$DOCKER_USER" ]; then exit 0; fi
-if [ -z "$DOCKER_PASSWORD" ]; then exit 0; fi
+if [ -z "$TAG" ]; then 
+	echo "No Tag defined exiting"
+	exit 0
+fi
+if [ -z "$DOCKER_USER" ]; then 
+	echo "No docker user defined exiting"
+	exit 0
+fi
+if [ -z "$DOCKER_PASSWORD" ]; then 
+	echo "No docker password defined exiting"
+	exit 0
+fi
 
 docker_asset=${REPO_SLUG}-${ruby_version}-${platform}:${asset_version}
 

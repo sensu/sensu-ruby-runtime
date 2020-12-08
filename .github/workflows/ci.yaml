@@ -13,14 +13,34 @@ jobs:
       id: get_version
       if: github.event_name == 'push' && contains(github.ref, 'refs/tags/') 
       run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
-    - name: Build and test docker images
+    - name: Build and test alpine 
       env: 
         TAG: ${{ steps.get_version.outputs.VERSION }}
         REPO_SLUG: ${{ github.repository }}  
-      run: ./build_platforms.sh
+      run: ./build_scripts/build_alpine_platforms.sh
+#    - name: Build and test debian 
+#      env: 
+#        TAG: ${{ steps.get_version.outputs.VERSION }}
+#        REPO_SLUG: ${{ github.repository }}  
+#      run: ./build_scripts/build_debian_platforms.sh
+#    - name: Build and test centos 
+#      env: 
+#        TAG: ${{ steps.get_version.outputs.VERSION }}
+#        REPO_SLUG: ${{ github.repository }}  
+#      run: ./build_scripts/build_centos_platforms.sh
+#    - name: Build and test amazon 
+#      env: 
+#        TAG: ${{ steps.get_version.outputs.VERSION }}
+#        REPO_SLUG: ${{ github.repository }}  
+#      run: ./build_scripts/build_amazon_platforms.sh
+    - name: create checksum file
+      run: ./checksum.sh 
     - name: Run if tagged version
       if: github.event_name == 'push' && contains(github.ref, 'refs/tags/') 
       env: 
         TAG: ${{ steps.get_version.outputs.VERSION }}
-        REPO_SLUG: ${{ github.repository }}  
+        REPO_SLUG: ${{ github.repository }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        DOCKER_USER: ${{ secrets.DOCKER_USER }}
+        DOCKER_PASSWORD: ${{ serets.DOCKER_PASSWORD }}  
       run: echo run on tag $REPO_SLUG $TAG
