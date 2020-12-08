@@ -29,9 +29,11 @@ how to get started with this project.
 | Asset Platform | Tested Operating Systems Docker Images |
 |:---------------|:-------------------------|
 |  alpine  (based on alpine:3.8)   | Alpine(3, 3.8, latest)                                      |
-|  centos6 (based on centos:6)     | Centos(6, 7), Debian(8, 9, 10), Ubuntu(14.04, 16.04, 18.04  |
+|  centos7 (based on centos:7)     | Centos(7, 8), Debian(8, 9, 10), Ubuntu(14.04, 16.04, 18.04  |
 |  centos  (based on centos:7)     | Centos(7), Debian(8, 9, 10), Ubuntu(14.04, 16.04, 18.04     |
-|  debian  (based on debian:9)     | Debian(8, 9, 10), Ubuntu(14.04, 16.04, 18.04), Centos(7)    |
+|  debian  (based on debian:9)     | Debian(8, 9, 10), Ubuntu(14.04, 16.04, 18.04), Centos(7,8)    |
+|  amnz1   (based on amazonlinux:1)     | Debian(8, 9, 10), Ubuntu(14.04, 16.04, 18.04), Centos(7,8)    |
+|  amnz2   (based on amazonlinux:2)     | Debian(8, 9, 10), Ubuntu(14.04, 16.04, 18.04), Centos(7,8)    |
 
 ## OpenSSL Cert Dir
 Please note that when using the ruby runtime asset built on a target OS that is different from the build platform, you may need to explicitly set the SSL_CERT_DIR environment variable to match the target OS filesystem.  Example: CentOS configures it libssl libraries to look for certs by default in `/etc/pki/tls/certs` and Debian/Ubuntu use `/usr/lib/ssl/certs`. The CentOS runtime asset when used on a Debian system would require the use of SSL_CERT_DIR override in the check command to correctly set the cert path to `/usr/lib/ssl/certs`

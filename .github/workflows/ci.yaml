@@ -18,21 +18,21 @@ jobs:
         TAG: ${{ steps.get_version.outputs.VERSION }}
         REPO_SLUG: ${{ github.repository }}  
       run: ./build_scripts/build_alpine_platforms.sh
-#    - name: Build and test debian 
-#      env: 
-#        TAG: ${{ steps.get_version.outputs.VERSION }}
-#        REPO_SLUG: ${{ github.repository }}  
-#      run: ./build_scripts/build_debian_platforms.sh
-#    - name: Build and test centos 
-#      env: 
-#        TAG: ${{ steps.get_version.outputs.VERSION }}
-#        REPO_SLUG: ${{ github.repository }}  
-#      run: ./build_scripts/build_centos_platforms.sh
-#    - name: Build and test amazon 
-#      env: 
-#        TAG: ${{ steps.get_version.outputs.VERSION }}
-#        REPO_SLUG: ${{ github.repository }}  
-#      run: ./build_scripts/build_amazon_platforms.sh
+    - name: Build and test debian 
+      env: 
+        TAG: ${{ steps.get_version.outputs.VERSION }}
+        REPO_SLUG: ${{ github.repository }}  
+      run: ./build_scripts/build_debian_platforms.sh
+    - name: Build and test centos 
+      env: 
+        TAG: ${{ steps.get_version.outputs.VERSION }}
+        REPO_SLUG: ${{ github.repository }}  
+      run: ./build_scripts/build_centos_platforms.sh
+    - name: Build and test amazon 
+      env: 
+        TAG: ${{ steps.get_version.outputs.VERSION }}
+        REPO_SLUG: ${{ github.repository }}  
+      run: ./build_scripts/build_amazon_platforms.sh
     - name: create checksum file
       run: ./checksum.sh 
     - name: Run if tagged version
