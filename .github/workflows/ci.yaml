@@ -33,7 +33,6 @@ jobs:
       run: ./build_scripts/build_amazon_platforms.sh
     - name: Build and test debian 
       if: steps.get_version.outputs.VERSION || steps.random_platform.outputs.PLATFORM == "debian" 
-      if: github.event_name == 'push' && contains(github.ref, 'refs/tags/') 
       env: 
         TAG: ${{ steps.get_version.outputs.VERSION }}
         REPO_SLUG: ${{ github.repository }}  
