@@ -5,8 +5,9 @@ ARG ASSET_VERSION=local_build
 ARG GREP_EXCLUDE='(ld.so|ld-linux-x86-64.so|libBrokenLocale.so|libSegFault.so|libanl.so|libc.so|libdl.so|libm.so|libmvec.so|libnss_compat.so|libnss_dns.so|libnss_files.so|libpthread.so|libresolv.so|librt.so|libthread_db.so|libutil.so|vdso.so)'
 
 
-RUN yum update -y && yum groupinstall -y "Development Tools" && yum install -y curl
-RUN yum install dnf-plugins-core && yum config-manager --set-enabled PowerTools
+RUN dnf update -y && dnf groupinstall -y "Development Tools" && dnf install -y curl
+RUN dnf install dnf-plugins-core && dnf config-manager --set-enabled PowerTools
+RUN dnf repolist
 
 RUN curl -L https://github.com/postmodern/ruby-install/archive/v0.7.0.tar.gz -o ruby-install-0.7.0.tar.gz && \
   tar -xzvf ruby-install-0.7.0.tar.gz && \
