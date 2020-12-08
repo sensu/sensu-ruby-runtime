@@ -42,5 +42,5 @@ jobs:
         REPO_SLUG: ${{ github.repository }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         DOCKER_USER: ${{ secrets.DOCKER_USER }}
-        DOCKER_PASSWORD: ${{ serets.DOCKER_PASSWORD }}  
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}  
       run: echo run on tag $REPO_SLUG $TAG
