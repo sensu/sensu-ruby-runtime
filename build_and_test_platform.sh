@@ -49,19 +49,20 @@ if [ -z "$TAG" ]; then
 	echo "No Tag defined exiting"
 	exit 0
 fi
+
 if [ -z "$DOCKER_USER" ]; then 
 	echo "No docker user defined exiting"
 	exit 0
 fi
+echo "preparing to tag and push docker hub asset for TAG: $TAG"
 if [ -z "$DOCKER_PASSWORD" ]; then 
 	echo "No docker password defined exiting"
-	exit 0
+	exit 1
 fi
 
 docker_asset=${REPO_SLUG}-${ruby_version}-${platform}:${asset_version}
 
 echo "Docker Hub Asset: ${docker_asset}"
-echo "preparing to tag and push docker hub asset"
 
 echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USER" --password-stdin
 
