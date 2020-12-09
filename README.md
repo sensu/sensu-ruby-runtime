@@ -24,14 +24,16 @@ how to get started with this project.
 
 ## Platform Coverage:
  Currently this repository only supports a subset of Linux distribution by making use of Docker containers to build and test.
- If you would like extend the coverage, please take a look at the travisCI integration and test build scripts. We're happy to take pull requests that extending the platform coverage. Here's the current platform matrix that we are testing for as of the 0.1 release:
+ If you would like extend the coverage, please take a look at the Github Action integration and associated build scripts. We're happy to take pull requests that extending the platform coverage. Here's the current platform matrix that we are testing for as of the 0.1 release:
 
 | Asset Platform | Tested Operating Systems Docker Images |
 |:---------------|:-------------------------|
 |  alpine  (based on alpine:3.8)   | Alpine(3, 3.8, latest)                                      |
-|  centos6 (based on centos:6)     | Centos(6, 7), Debian(8, 9, 10), Ubuntu(14.04, 16.04, 18.04  |
-|  centos  (based on centos:7)     | Centos(7), Debian(8, 9, 10), Ubuntu(14.04, 16.04, 18.04     |
-|  debian  (based on debian:9)     | Debian(8, 9, 10), Ubuntu(14.04, 16.04, 18.04), Centos(7)    |
+|  centos7  (based on centos:7)     | Centos(7,8), Debian(8, 9, 10), Ubuntu(14.04, 16.04, 18.04, 20.04)     |
+|  centos8 (based on centos:8)     | Centos(8), Debian(10), Ubuntu(20.04)  |
+|  debian  (based on debian:9)     | Debian(8, 9, 10), Ubuntu(14.04, 16.04, 18.04, 20.04), Centos(7,8)    |
+|  amnz1   (based on amazonlinux:1)     | Debian(8, 9, 10), Ubuntu(14.04, 16.04, 18.04, 20.04), Centos(7,8)    |
+|  amnz2   (based on amazonlinux:2)     | Debian(10), Ubuntu(18.04, 20.04), Centos(8)    |
 
 ## OpenSSL Cert Dir
 Please note that when using the ruby runtime asset built on a target OS that is different from the build platform, you may need to explicitly set the SSL_CERT_DIR environment variable to match the target OS filesystem.  Example: CentOS configures it libssl libraries to look for certs by default in `/etc/pki/tls/certs` and Debian/Ubuntu use `/usr/lib/ssl/certs`. The CentOS runtime asset when used on a Debian system would require the use of SSL_CERT_DIR override in the check command to correctly set the cert path to `/usr/lib/ssl/certs`

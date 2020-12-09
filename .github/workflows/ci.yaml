@@ -1,0 +1,56 @@
+name: Build Docker Image CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      id: checkout
+      uses: actions/checkout@v2
+    - name: select platform to test
+      id: random_platform
+      run: echo ::set-output name=PLATFORM::$(./build_scripts/random_test_platform.sh)    
+    - name: Get the version
+      id: get_version
+      if: github.event_name == 'push' && contains(github.ref, 'refs/tags/') 
+      run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+    - name: echo settings
+      id: echo_settings
+      run: "echo platform: ${{ steps.random_platform.outputs.PLATFORM }} version: ${{ steps.get_version.outputs.VERSION }}" 
+    - name: Build and test alpine 
+      if: steps.get_version.outputs.VERSION || github.event_name == 'pull_request' || steps.random_platform.outputs.PLATFORM == 'alpine' 
+      env: 
+        TAG: ${{ steps.get_version.outputs.VERSION }}
+        REPO_SLUG: ${{ github.repository }}  
+      run: ./build_scripts/build_alpine_platforms.sh
+    - name: Build and test amazon 
+      if: steps.get_version.outputs.VERSION || github.event_name == 'pull_request' || steps.random_platform.outputs.PLATFORM == 'amazon' 
+      env: 
+        TAG: ${{ steps.get_version.outputs.VERSION }}
+        REPO_SLUG: ${{ github.repository }}  
+      run: ./build_scripts/build_amazon_platforms.sh
+    - name: Build and test debian 
+      if: steps.get_version.outputs.VERSION || github.event_name == 'pull_request' || steps.random_platform.outputs.PLATFORM == 'debian' 
+      env: 
+        TAG: ${{ steps.get_version.outputs.VERSION }}
+        REPO_SLUG: ${{ github.repository }}  
+      run: ./build_scripts/build_debian_platforms.sh
+    - name: Build and test centos 
+      if: steps.get_version.outputs.VERSION || github.event_name == 'pull_request' || steps.random_platform.outputs.PLATFORM == 'centos' 
+      env: 
+        TAG: ${{ steps.get_version.outputs.VERSION }}
+        REPO_SLUG: ${{ github.repository }}  
+      run: ./build_scripts/build_centos_platforms.sh
+    - name: create checksum file
+      run: ./checksum.sh 
+    - name: Release tagged version
+      if: github.event_name == 'push' && contains(github.ref, 'refs/tags/') 
+      env: 
+        TAG: ${{ steps.get_version.outputs.VERSION }}
+        REPO_SLUG: ${{ github.repository }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        DOCKER_USER: ${{ secrets.DOCKER_USER }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}  
+      run: echo run on tag $REPO_SLUG $TAG
