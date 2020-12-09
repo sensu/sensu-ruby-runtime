@@ -59,4 +59,4 @@ jobs:
         TAG: ${{ steps.get_version.outputs.VERSION }}
         REPO_SLUG: ${{ github.repository }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: echo run on tag $REPO_SLUG $TAG
+      run: ./upload.sh
