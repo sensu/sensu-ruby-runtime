@@ -33,17 +33,24 @@ else
   fi
 fi
 
+OLD_DIR=$PWD
+rm -rf $PWD/build/testing
+mkdir -p $PWD/build/testing
+cd $PWD/build/testing
+tar xzf $OLD_DIR/dist/$asset_filename
+cd $OLD_DIR
 
 test_arr=($test_platforms)
 for test_platform in "${test_arr[@]}"; do
   echo "Test: ${test_platform}"
-  docker run -e platform -e test_platform=${test_platform} -e asset_filename=${asset_filename} -v "$PWD/scripts/:/scripts" -v "$PWD/dist:/dist" ${test_platform} /scripts/test.sh
+  docker run -e platform -e test_platform=${test_platform} -e asset_filename=${asset_filename} -v "$PWD/scripts/:/scripts" -v "$PWD/build/testing:/build" -v "$PWD/dist:/dist" ${test_platform} /scripts/test.sh
   retval=$?
   if [ $retval -ne 0 ]; then
     echo "!!! Error testing ${asset_filename} on ${test_platform}"
     exit $retval
   fi
 done
+rm -rf $PWD/build/testing
 
 if [ -z "$TAG" ]; then 
 	echo "No Tag defined exiting"
