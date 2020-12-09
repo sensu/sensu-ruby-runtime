@@ -25,6 +25,7 @@ builds:
   filter:
   -  "entity.system.os == 'linux'"
   -  "entity.system.arch == 'amd64'"
+  -  "entity.system.platform != 'amazon'"
   -  "entity.system.platform_family == 'rhel'"
   -  "parseInt(entity.system.platform_version.split('.')[0]) == 7"
 - platform: "centos8"
@@ -34,6 +35,7 @@ builds:
   filter:
   -  "entity.system.os == 'linux'"
   -  "entity.system.arch == 'amd64'"
+  -  "entity.system.platform != 'amazon'"
   -  "entity.system.platform_family == 'rhel'"
   -  "parseInt(entity.system.platform_version.split('.')[0]) == 8"
 - platform: "amzn1"
