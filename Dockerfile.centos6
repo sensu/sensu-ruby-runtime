@@ -3,6 +3,7 @@ FROM centos:6
 ARG RUBY_VERSION=2.4.4
 ARG ASSET_VERSION=local_build
 ARG GREP_EXCLUDE='(ld.so|ld-linux-x86-64.so|libBrokenLocale.so|libSegFault.so|libanl.so|libc.so|libdl.so|libm.so|libmvec.so|libnss_compat.so|libnss_dns.so|libnss_files.so|libpthread.so|libresolv.so|librt.so|libthread_db.so|libutil.so|vdso.so)'
+COPY setup/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo
 
 RUN yum update -y && yum groupinstall -y "Development Tools" && yum install -y curl
 
