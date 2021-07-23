@@ -6,6 +6,10 @@ and this project adheres to [Semantic
 Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+### Changed
+- Added centos6 image back
+- Updated alpine image to alpine 3.14
+
 ## [0.0.11] - 2020-09-17
 
 ### Added
