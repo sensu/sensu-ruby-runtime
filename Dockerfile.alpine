@@ -1,4 +1,4 @@
-FROM alpine:3.8
+FROM alpine:3.14
 
 ARG RUBY_VERSION=2.4.4
 ARG ASSET_VERSION=local_build
