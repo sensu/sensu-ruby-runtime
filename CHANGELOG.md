@@ -7,6 +7,11 @@ Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+## [0.2.1] - 2020-08-24
+
+### Changed
+- Updated alpine image to alpine 3.14.1
+
 ## [0.2.0] - 2020-07-23
 
 ### Changed
