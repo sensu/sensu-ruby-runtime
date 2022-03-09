@@ -56,8 +56,8 @@ Please note the following instructions:
 
    ```
    $ mkdir assets
-   $ docker run -v "$PWD/assets:/assets" sensu-ruby-runtime:2.4.4-debian cp /assets/sensu-ruby-runtime_2.4.4_debian_linux_amd64.tar.gz /assets/
-   $ shasum -a 512 assets/sensu-ruby-runtime_2.4.4_debian_linux_amd64.tar.gz
+   $ docker run -v "$PWD/assets:/assets" sensu-ruby-runtime:2.4.4-debian cp /assets/sensu-ruby-runtime_2.4.4_debian_linux_$(uname -m).tar.gz /assets/
+   $ shasum -a 512 assets/sensu-ruby-runtime_2.4.4_debian_linux_$(uname -m).tar.gz
    ```
 
 3. Put that asset somewhere that your Sensu agent can fetch it. Perhaps add it to the Bonsai asset index!
@@ -84,7 +84,7 @@ Please note the following instructions:
        "sha512": "4f926bf4328fbad2b9cac873d117f771914f4b837c9c85584c38ccf55a3ef3c2e8d154812246e5dda4a87450576b2c58ad9ab40c9e2edc31b288d066b195b21b",
        "filters": [
          "entity.system.os == 'linux'",
-         "entity.system.arch == 'amd64'",
+         "entity.system.arch == '$(uname -m)'",
          "entity.system.platform == 'debian'"
        ]
      }

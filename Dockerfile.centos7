@@ -18,7 +18,7 @@ RUN LIBS=$(find /opt/rubies/ruby-${RUBY_VERSION} -type f -executable -exec ldd {
   for f in $LIBS; do if [ -e $f ]; then echo "Copying Library: $f" && cp $f /opt/rubies/ruby-${RUBY_VERSION}/lib/; fi; done
 
 RUN mkdir /assets/ && \
-  export SENSU_ASSET="/assets/sensu-ruby-runtime_${ASSET_VERSION}_ruby-${RUBY_VERSION}_$(source /etc/os-release && echo $ID$VERSION_ID)_$(uname -s | tr '[:upper:]' '[:lower:]')_amd64.tar.gz" && \
+  export SENSU_ASSET="/assets/sensu-ruby-runtime_${ASSET_VERSION}_ruby-${RUBY_VERSION}_$(source /etc/os-release && echo $ID$VERSION_ID)_$(uname -s | tr '[:upper:]' '[:lower:]')_$(uname -m).tar.gz" && \
   tar -czf $SENSU_ASSET -C /opt/rubies/ruby-${RUBY_VERSION}/ .
 
 ENV PATH=$PATH:/opt/rubies/ruby-${RUBY_VERSION}/bin

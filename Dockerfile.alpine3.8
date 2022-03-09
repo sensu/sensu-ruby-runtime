@@ -23,7 +23,7 @@ RUN LIBS=$(apk info -L libc6-compat 2>/dev/null |  grep "^lib/lib" | sort -u ) &
   for f in $LIBS; do if [ -e $f ]; then echo "Copying Library: /$f" && cp /$f /opt/rubies/ruby-${RUBY_VERSION}/lib/; fi; done
 
 RUN mkdir /assets/ && \
-  export SENSU_ASSET="/assets/sensu-ruby-runtime_${ASSET_VERSION}_ruby-${RUBY_VERSION}_alpine3.8_$(uname -s | tr '[:upper:]' '[:lower:]')_amd64.tar.gz" && \
+  export SENSU_ASSET="/assets/sensu-ruby-runtime_${ASSET_VERSION}_ruby-${RUBY_VERSION}_alpine3.8_$(uname -s | tr '[:upper:]' '[:lower:]')_$(uname -m).tar.gz" && \
   tar -czf $SENSU_ASSET -C /opt/rubies/ruby-${RUBY_VERSION}/ .
 
 ENV PATH=$PATH:/opt/rubies/ruby-${RUBY_VERSION}/bin
