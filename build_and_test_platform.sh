@@ -3,7 +3,7 @@
 ignore_errors=0
 ruby_version=2.4.4
 asset_version=${TAG:-local-build}
-asset_filename=sensu-ruby-runtime_${asset_version}_ruby-${ruby_version}_${platform}_linux_$(uname -m).tar.gz
+asset_filename=sensu-ruby-runtime_${asset_version}_ruby-${ruby_version}_${platform}_linux_aarch64.tar.gz
 asset_image=sensu-ruby-runtime-${ruby_version}-${platform}:${asset_version}
 
 
