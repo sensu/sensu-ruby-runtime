@@ -33,12 +33,12 @@ else
   fi
 fi
 
-ls -lash "$PWD/dist"
+ls -lash /dist/
 
 test_arr=($test_platforms)
 for test_platform in "${test_arr[@]}"; do
   echo "Test: ${test_platform}"
-  docker run -e platform -e test_platform=${test_platform} -e asset_filename=${asset_filename} -v "$PWD/scripts/:/scripts" -v "$PWD/dist:/dist" ${test_platform} /scripts/test.sh
+  docker run -e platform -e test_platform=${test_platform} -e asset_filename=${asset_filename} -v "$PWD/scripts/:/scripts" -v "/dist:/dist" ${test_platform} /scripts/test.sh
   retval=$?
   if [ $retval -ne 0 ]; then
     echo "!!! Error testing ${asset_filename} on ${test_platform}"
