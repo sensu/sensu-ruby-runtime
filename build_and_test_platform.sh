@@ -33,6 +33,7 @@ else
   fi
 fi
 
+ls -lash "$PWD/dist"
 
 test_arr=($test_platforms)
 for test_platform in "${test_arr[@]}"; do
