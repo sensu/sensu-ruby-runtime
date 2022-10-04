@@ -1,6 +1,6 @@
 FROM debian:9
 
-ARG RUBY_VERSION=2.4.4
+ARG RUBY_VERSION=2.7.6
 ARG ASSET_VERSION=local_build
 ARG GREP_EXCLUDE='(ld.so|ld-linux-x86-64.so|libBrokenLocale.so|libSegFault.so|libanl.so|libc.so|libdl.so|libm.so|libmvec.so|libnss_compat.so|libnss_dns.so|libnss_files.so|libpthread.so|libresolv.so|librt.so|libthread_db.so|libutil.so|vdso.so)'
 
@@ -11,7 +11,7 @@ RUN curl -L https://github.com/postmodern/ruby-install/archive/v0.7.0.tar.gz -o 
   cd ruby-install-0.7.0/ && \
   make install && \
   ruby-install ruby ${RUBY_VERSION} -- --enable-load-relative --disable-install-doc && \
-  PATH=$PATH:/opt/rubies/ruby-${RUBY_VERSION}/bin/ && gem install --no-ri --no-rdoc ffi sys-filesystem 
+  PATH=$PATH:/opt/rubies/ruby-${RUBY_VERSION}/bin/ && gem install --no-document ffi sys-filesystem 
 
 RUN LIBS=$(find /opt/rubies/ruby-${RUBY_VERSION} -type f -executable -exec ldd {} 2>/dev/null \;|  grep "=>" | egrep -v ${GREP_EXCLUDE} | awk '{print $3}'| sort -u ) && \
   for f in $LIBS; do if [ -e $f ]; then echo "Copying Library: $f" && cp $f /opt/rubies/ruby-${RUBY_VERSION}/lib/; fi; done

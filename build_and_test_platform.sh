@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ignore_errors=0
-ruby_version=2.4.4
+ruby_version=2.7.6
 asset_version=${TAG:-local-build}
 asset_filename=sensu-ruby-runtime_${asset_version}_ruby-${ruby_version}_${platform}_linux_amd64.tar.gz
 asset_image=sensu-ruby-runtime-${ruby_version}-${platform}:${asset_version}

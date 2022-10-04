@@ -3,7 +3,7 @@ description: "#{repo}"
 builds:
 - platform: "alpine"
   arch: "amd64"
-  asset_filename: "#{repo}_#{version}_ruby-2.4.4_alpine_linux_amd64.tar.gz"
+  asset_filename: "#{repo}_#{version}_ruby-2.7.6_alpine_linux_amd64.tar.gz"
   sha_filename: "#{repo}_#{version}_sha512-checksums.txt"
   filter:
   -  "entity.system.os == 'linux'"
@@ -12,7 +12,7 @@ builds:
   -  "entity.system.platform_version.split('.')[0] == '3'"
 - platform: "debian"
   arch: "amd64"
-  asset_filename: "#{repo}_#{version}_ruby-2.4.4_debian_linux_amd64.tar.gz"
+  asset_filename: "#{repo}_#{version}_ruby-2.7.6_debian_linux_amd64.tar.gz"
   sha_filename: "#{repo}_#{version}_sha512-checksums.txt"
   filter:
   -  "entity.system.os == 'linux'"
@@ -20,7 +20,7 @@ builds:
   -  "entity.system.platform_family == 'debian'"
 - platform: "centos6"
   arch: "amd64"
-  asset_filename: "#{repo}_#{version}_ruby-2.4.4_centos6_linux_amd64.tar.gz"
+  asset_filename: "#{repo}_#{version}_ruby-2.7.6_centos6_linux_amd64.tar.gz"
   sha_filename: "#{repo}_#{version}_sha512-checksums.txt"
   filter:
   -  "entity.system.os == 'linux'"
@@ -30,7 +30,7 @@ builds:
   -  "parseInt(entity.system.platform_version.split('.')[0]) == 6"
 - platform: "centos7"
   arch: "amd64"
-  asset_filename: "#{repo}_#{version}_ruby-2.4.4_centos7_linux_amd64.tar.gz"
+  asset_filename: "#{repo}_#{version}_ruby-2.7.6_centos7_linux_amd64.tar.gz"
   sha_filename: "#{repo}_#{version}_sha512-checksums.txt"
   filter:
   -  "entity.system.os == 'linux'"
@@ -40,7 +40,7 @@ builds:
   -  "parseInt(entity.system.platform_version.split('.')[0]) == 7"
 - platform: "centos8"
   arch: "amd64"
-  asset_filename: "#{repo}_#{version}_ruby-2.4.4_centos8_linux_amd64.tar.gz"
+  asset_filename: "#{repo}_#{version}_ruby-2.7.6_centos8_linux_amd64.tar.gz"
   sha_filename: "#{repo}_#{version}_sha512-checksums.txt"
   filter:
   -  "entity.system.os == 'linux'"
@@ -50,7 +50,7 @@ builds:
   -  "parseInt(entity.system.platform_version.split('.')[0]) == 8"
 - platform: "amzn1"
   arch: "amd64"
-  asset_filename: "#{repo}_#{version}_ruby-2.4.4_amzn1_linux_amd64.tar.gz"
+  asset_filename: "#{repo}_#{version}_ruby-2.7.6_amzn1_linux_amd64.tar.gz"
   sha_filename: "#{repo}_#{version}_sha512-checksums.txt"
   filter:
   -  "entity.system.os == 'linux'"
@@ -59,7 +59,7 @@ builds:
   -  "entity.system.platform_version.split('.')[0] == '2018'"
 - platform: "amzn2"
   arch: "amd64"
-  asset_filename: "#{repo}_#{version}_ruby-2.4.4_amzn2_linux_amd64.tar.gz"
+  asset_filename: "#{repo}_#{version}_ruby-2.7.6_amzn2_linux_amd64.tar.gz"
   sha_filename: "#{repo}_#{version}_sha512-checksums.txt"
   filter:
   -  "entity.system.os == 'linux'"
